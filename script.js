@@ -36,10 +36,9 @@
 
   const scope = document.querySelector("[data-scope]");
   const canTrackPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (scope && canTrackPointer.matches && !prefersReducedMotion.matches) {
-    scope.addEventListener("pointermove", (event) => {
+  if (scope) {
+    const aimScope = (event) => {
       const bounds = scope.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
@@ -48,12 +47,26 @@
       scope.style.setProperty("--aim-x", `${x * maxOffset}px`);
       scope.style.setProperty("--aim-y", `${y * maxOffset}px`);
       scope.style.setProperty("--scope-rotation", `${x * 12}deg`);
+    };
+
+    scope.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch" || canTrackPointer.matches) {
+        aimScope(event);
+      }
     });
 
-    scope.addEventListener("pointerleave", () => {
-      scope.style.setProperty("--aim-x", "0px");
-      scope.style.setProperty("--aim-y", "0px");
-      scope.style.setProperty("--scope-rotation", "0deg");
+    scope.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "touch") {
+        aimScope(event);
+      }
+    });
+
+    scope.addEventListener("pointerleave", (event) => {
+      if (event.pointerType !== "touch") {
+        scope.style.setProperty("--aim-x", "0px");
+        scope.style.setProperty("--aim-y", "0px");
+        scope.style.setProperty("--scope-rotation", "0deg");
+      }
     });
   }
 

@@ -62,7 +62,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; letter-spacing: -.5px; t
 .button span { font-size: 15px; }
 .hero-note { display: flex; align-items: center; gap: 10px; margin-top: 32px; color: var(--faint); font-size: 10px; }
 .note-line { width: 27px; height: 1px; background: var(--olive); }
-.hero-art { --aim-x: 0px; --aim-y: 0px; --scope-rotation: 0deg; position: relative; width: min(100%, 405px); aspect-ratio: 1.45; justify-self: end; overflow: hidden; border: 1px solid rgb(255 255 255 / 16%); background: #171815; isolation: isolate; }
+.hero-art { --aim-x: 0px; --aim-y: 0px; --scope-rotation: 0deg; position: relative; width: min(100%, 405px); aspect-ratio: 1.78; justify-self: end; overflow: hidden; border: 1px solid rgb(255 255 255 / 16%); background: #171815; isolation: isolate; }
 .hero-banner, .scope-shade, .scope-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-banner { z-index: -2; object-fit: cover; object-position: center; }
 .scope-shade { z-index: -1; background: linear-gradient(180deg, rgb(10 11 9 / 25%), rgb(10 11 9 / 18%) 45%, rgb(10 11 9 / 75%)), radial-gradient(ellipse, transparent 38%, rgb(8 9 8 / 72%) 100%); }
