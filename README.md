@@ -26,6 +26,11 @@ In the GitHub repository, open **Settings → Pages** and choose **GitHub
 Actions** as the build and deployment source. The workflow publishes the
 contents of `website/`.
 
+Keep the website files inside `website/`; do not move them to the repository
+root. The repository page on `github.com` shows the README and file list; the
+published Pages website is a separate URL. Open the Pages deployment URL from
+the successful GitHub Actions run to see the actual website.
+
 After deployment, use the Pages URL shown by the GitHub Actions deployment.
 The Wordle Activity page is that URL with `/wordle/` appended (for example,
 `https://owner.github.io/repository/wordle/` for a project site).
