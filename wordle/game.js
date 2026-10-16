@@ -4,6 +4,7 @@ const config = window.TF9_CONFIG || {};
 const lockedPanel = document.getElementById("locked-panel");
 const gamePanel = document.getElementById("game-panel");
 const authStatus = document.getElementById("auth-status");
+const playButton = document.getElementById("play-button");
 const gameStatus = document.getElementById("game-status");
 const board = document.getElementById("board");
 const keyboard = document.getElementById("keyboard");
@@ -209,7 +210,15 @@ async function connectActivity() {
   showLockedMessage("Establishing secure Discord link…");
   try {
     const discordSdk = new DiscordSDK(config.discordApplicationId);
-    await discordSdk.ready();
+    await Promise.race([
+      discordSdk.ready(),
+      new Promise((_, reject) => {
+        window.setTimeout(
+          () => reject(new Error("Discord did not respond. Close and relaunch the Activity, then try again.")),
+          15000
+        );
+      }),
+    ]);
 
     const { code } = await discordSdk.commands.authorize({
       client_id: config.discordApplicationId,
@@ -232,6 +241,22 @@ async function connectActivity() {
 
     sessionToken = authorization.session_token;
     operatorLabel.textContent = authorization.user.displayName;
+    setMessage(authStatus, `Connected as ${authorization.user.displayName}. Ready when you are.`);
+    authStatus.hidden = true;
+    playButton.hidden = false;
+  } catch (error) {
+    showLockedMessage(
+      error.message || "Secure connection failed. Close the Activity and try again.",
+      true
+    );
+  }
+}
+
+async function startGame() {
+  playButton.disabled = true;
+  authStatus.hidden = false;
+  setMessage(authStatus, "Loading today's Wordle…");
+  try {
     const response = await apiRequest("/api/game/today");
     currentGame = response.game;
     lockedPanel.hidden = true;
@@ -239,10 +264,13 @@ async function connectActivity() {
     renderBoard();
     updateSummary();
   } catch (error) {
-    showLockedMessage(
-      error.message || "Secure connection failed. Close the Activity and try again.",
+    setMessage(
+      authStatus,
+      error.message || "The game could not be loaded. Please try again.",
       true
     );
+  } finally {
+    playButton.disabled = false;
   }
 }
 
@@ -266,6 +294,10 @@ keyboard.addEventListener("click", (event) => {
   if (button) {
     handleKey(button.dataset.key);
   }
+});
+
+playButton.addEventListener("click", () => {
+  void startGame();
 });
 
 void connectActivity();
