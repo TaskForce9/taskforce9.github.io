@@ -197,7 +197,7 @@ function showLockedMessage(message, isError = false) {
 }
 
 async function connectActivity() {
-  if (window.self === window.top) {
+  if (window.self === window.top && !window.TF9_ACTIVITY_ENTRY) {
     showLockedMessage("Open this game inside the Task Force 9 Discord server.");
     return;
   }
