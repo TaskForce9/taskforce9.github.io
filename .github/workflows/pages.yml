@@ -10,6 +10,7 @@ on:
       - "script.js"
       - "styles.css"
       - "assets/**"
+      - "activity/**"
       - "wordle/**"
       - "package.json"
       - "package-lock.json"
