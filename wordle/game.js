@@ -1,3 +1,5 @@
+import { DiscordSDK } from "@discord/embedded-app-sdk";
+
 const config = window.TF9_CONFIG || {};
 const lockedPanel = document.getElementById("locked-panel");
 const gamePanel = document.getElementById("game-panel");
@@ -206,9 +208,6 @@ async function connectActivity() {
 
   showLockedMessage("Establishing secure Discord link…");
   try {
-    const { DiscordSDK } = await import(
-      "https://esm.sh/@discord/embedded-app-sdk@2.5.0?bundle"
-    );
     const discordSdk = new DiscordSDK(config.discordApplicationId);
     await discordSdk.ready();
 
