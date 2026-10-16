@@ -11,6 +11,9 @@ on:
       - "styles.css"
       - "assets/**"
       - "wordle/**"
+      - "package.json"
+      - "package-lock.json"
+      - "build-site.mjs"
   workflow_dispatch:
 
 permissions:
@@ -31,18 +34,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install build dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          # Publish the site at the domain root; keep README/workflow out of the site artifact.
-          path: |
-            index.html
-            script.js
-            styles.css
-            assets
-            wordle
+          path: dist
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
