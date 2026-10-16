@@ -1,0 +1,48 @@
+name: Deploy Task Force 9 website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/pages.yml"
+      - "index.html"
+      - "script.js"
+      - "styles.css"
+      - "assets/**"
+      - "wordle/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publish the site at the domain root; keep README/workflow out of the site artifact.
+          path: |
+            index.html
+            script.js
+            styles.css
+            assets
+            wordle
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
