@@ -14,6 +14,7 @@ const operatorLabel = document.getElementById("operator-id");
 const apiBase = window.TF9_ACTIVITY_ENTRY
   ? ""
   : String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
+const apiProxyPrefix = window.TF9_ACTIVITY_ENTRY ? "/api" : "";
 
 let sessionToken = "";
 let currentGame = null;
@@ -49,7 +50,10 @@ async function apiRequest(path, options = {}) {
   }
   let response;
   try {
-    response = await fetch(`${apiBase}${path}`, { ...options, headers });
+    response = await fetch(`${apiBase}${apiProxyPrefix}${path}`, {
+      ...options,
+      headers,
+    });
   } catch (error) {
     if (error instanceof TypeError && window.TF9_ACTIVITY_ENTRY) {
       throw new Error(
