@@ -44,18 +44,33 @@ function reportActivityDiagnostic(event, stage, status) {
   if (!window.TF9_ACTIVITY_ENTRY) {
     return;
   }
+  const directApiBase = String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
+  const endpoints = [
+    `${directApiBase}/api/diagnostics`,
+    `${apiProxyPrefix}/api/diagnostics`,
+  ].filter((endpoint, index, all) => endpoint && all.indexOf(endpoint) === index);
   const payload = { event, stage };
   if (status !== undefined) {
     payload.status = status;
   }
-  void fetch(`${apiBase}${apiProxyPrefix}/api/diagnostics`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-    keepalive: true,
-  }).catch(() => {
+  void (async () => {
+    for (const endpoint of endpoints) {
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        });
+        if (response.ok) {
+          return;
+        }
+      } catch {
+        continue;
+      }
+    }
     console.warn("TF9 Activity diagnostics could not reach the game API.");
-  });
+  })();
 }
 
 async function apiRequest(path, options = {}, diagnosticStage) {
