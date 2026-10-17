@@ -1,4 +1,5 @@
 import { DiscordSDK } from "@discord/embedded-app-sdk";
+import validWordData from "./valid-words.json";
 
 const config = window.TF9_CONFIG || {};
 const lockedPanel = document.getElementById("locked-panel");
@@ -15,6 +16,7 @@ const apiBase = window.TF9_ACTIVITY_ENTRY
   ? ""
   : String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
 const apiProxyPrefix = window.TF9_ACTIVITY_ENTRY ? "/api" : "";
+const validGuessWords = new Set(validWordData.words);
 
 let sessionToken = "";
 let currentGame = null;
@@ -209,6 +211,13 @@ async function submitDraft() {
     setMessage(gameStatus, "A five-letter guess is required.", true);
     return;
   }
+  if (!validGuessWords.has(draft.toLowerCase())) {
+    setMessage(gameStatus, "Not in the word list. Try another five-letter word.", true);
+    board.classList.remove("invalid-guess");
+    void board.offsetWidth;
+    board.classList.add("invalid-guess");
+    return;
+  }
 
   submitting = true;
   renderKeyboard();
@@ -360,7 +369,7 @@ keyboard.addEventListener("click", (event) => {
   }
 });
 
-playButton.addEventListener("click", () => {
+playButton?.addEventListener("click", () => {
   void startGame();
 });
 
