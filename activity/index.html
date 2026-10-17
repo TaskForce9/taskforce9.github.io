@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#10110f">
   <meta name="description" content="Task Force 9's Discord Wordle Activity.">
   <title>TF9 Wordle Activity</title>
-  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="game.css?v=20261017-6">
   <script src="config.js"></script>
   <script>window.TF9_ACTIVITY_ENTRY = true;</script>
   <script src="game.bundle.js" defer></script>
@@ -31,12 +31,23 @@
       </div>
       <p class="status" id="auth-status" role="status" aria-live="polite">Connecting to Discord…</p>
       <button class="play-button" id="play-button" type="button" hidden>
-        <span class="play-button-icon" aria-hidden="true"><span></span></span>
+        <span class="play-button-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" focusable="false">
+            <circle class="target-ring target-ring-outer" cx="24" cy="24" r="17"></circle>
+            <circle class="target-ring target-ring-inner" cx="24" cy="24" r="9"></circle>
+            <path class="target-crosshair" d="M24 2v10M24 36v10M2 24h10M36 24h10"></path>
+            <path class="target-play" d="M21.5 19.5v9l8-4.5z"></path>
+          </svg>
+        </span>
         <span class="play-button-copy">
-          <span class="play-button-kicker">MISSION READY</span>
+          <span class="play-button-kicker"><span></span> DAILY PUZZLE · 6 ATTEMPTS</span>
           <strong>PLAY TODAY'S WORDLE</strong>
         </span>
-        <span class="play-button-arrow" aria-hidden="true">→</span>
+        <span class="play-button-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M4 12h16m-6-6 6 6-6 6"></path>
+          </svg>
+        </span>
       </button>
     </section>
 
