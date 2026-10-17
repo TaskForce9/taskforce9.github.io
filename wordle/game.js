@@ -11,7 +11,9 @@ const keyboard = document.getElementById("keyboard");
 const result = document.getElementById("result");
 const dateLabel = document.getElementById("puzzle-date");
 const operatorLabel = document.getElementById("operator-id");
-const apiBase = String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
+const apiBase = window.TF9_ACTIVITY_ENTRY
+  ? ""
+  : String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
 
 let sessionToken = "";
 let currentGame = null;
@@ -45,7 +47,17 @@ async function apiRequest(path, options = {}) {
   if (options.body) {
     headers.set("Content-Type", "application/json");
   }
-  const response = await fetch(`${apiBase}${path}`, { ...options, headers });
+  let response;
+  try {
+    response = await fetch(`${apiBase}${path}`, { ...options, headers });
+  } catch (error) {
+    if (error instanceof TypeError && window.TF9_ACTIVITY_ENTRY) {
+      throw new Error(
+        "Could not reach the game server through Discord. Check the Activity URL mapping: /api → tf9-game.wispbyte.app."
+      );
+    }
+    throw error;
+  }
   return readResponse(response);
 }
 
@@ -202,7 +214,7 @@ async function connectActivity() {
     showLockedMessage("Open this game inside the Task Force 9 Discord server.");
     return;
   }
-  if (!config.discordApplicationId || !apiBase) {
+  if (!config.discordApplicationId || (!window.TF9_ACTIVITY_ENTRY && !apiBase)) {
     showLockedMessage("The Activity is not configured yet. Ask a server administrator to finish setup.", true);
     return;
   }
