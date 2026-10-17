@@ -53,13 +53,13 @@ function reportActivityDiagnostic(event, stage, status) {
   if (status !== undefined) {
     payload.status = status;
   }
+  const query = new URLSearchParams(payload);
   void (async () => {
     for (const endpoint of endpoints) {
       try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+        const response = await fetch(`${endpoint}?${query}`, {
+          method: "GET",
+          cache: "no-store",
           keepalive: true,
         });
         if (response.ok) {
