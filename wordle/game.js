@@ -40,7 +40,25 @@ async function readResponse(response) {
   return payload;
 }
 
-async function apiRequest(path, options = {}) {
+function reportActivityDiagnostic(event, stage, status) {
+  if (!window.TF9_ACTIVITY_ENTRY) {
+    return;
+  }
+  const payload = { event, stage };
+  if (status !== undefined) {
+    payload.status = status;
+  }
+  void fetch(`${apiBase}${apiProxyPrefix}/api/diagnostics`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch(() => {
+    console.warn("TF9 Activity diagnostics could not reach the game API.");
+  });
+}
+
+async function apiRequest(path, options = {}, diagnosticStage) {
   const headers = new Headers(options.headers || {});
   if (sessionToken) {
     headers.set("Authorization", `Bearer ${sessionToken}`);
@@ -55,12 +73,16 @@ async function apiRequest(path, options = {}) {
       headers,
     });
   } catch (error) {
+    reportActivityDiagnostic("network_error", diagnosticStage);
     if (error instanceof TypeError && window.TF9_ACTIVITY_ENTRY) {
       throw new Error(
         "Could not reach the game server through Discord. Check the Activity URL mapping: /api → tf9-game.wispbyte.app."
       );
     }
     throw error;
+  }
+  if (!response.ok) {
+    reportActivityDiagnostic("http_error", diagnosticStage, response.status);
   }
   return readResponse(response);
 }
@@ -176,10 +198,14 @@ async function submitDraft() {
   submitting = true;
   renderKeyboard();
   try {
-    const response = await apiRequest("/api/game/guess", {
-      method: "POST",
-      body: JSON.stringify({ guess: draft }),
-    });
+    const response = await apiRequest(
+      "/api/game/guess",
+      {
+        method: "POST",
+        body: JSON.stringify({ guess: draft }),
+      },
+      "guess_submit"
+    );
     currentGame = response.game;
     draft = "";
     renderBoard();
@@ -224,6 +250,7 @@ async function connectActivity() {
   }
 
   showLockedMessage("Establishing secure Discord link…");
+  let diagnosticStage = "sdk_ready";
   try {
     const discordSdk = new DiscordSDK(config.discordApplicationId);
     await Promise.race([
@@ -236,6 +263,7 @@ async function connectActivity() {
       }),
     ]);
 
+    diagnosticStage = "authorize";
     const { code } = await discordSdk.commands.authorize({
       client_id: config.discordApplicationId,
       response_type: "code",
@@ -244,10 +272,12 @@ async function connectActivity() {
       scope: ["identify", "guilds"],
     });
 
+    diagnosticStage = "auth_exchange";
     const authorization = await apiRequest("/api/auth/exchange", {
       method: "POST",
       body: JSON.stringify({ code }),
-    });
+    }, "auth_exchange");
+    diagnosticStage = "authenticate";
     const authenticated = await discordSdk.commands.authenticate({
       access_token: authorization.access_token,
     });
@@ -261,6 +291,9 @@ async function connectActivity() {
     authStatus.hidden = true;
     playButton.hidden = false;
   } catch (error) {
+    if (diagnosticStage !== "auth_exchange") {
+      reportActivityDiagnostic("activity_error", diagnosticStage);
+    }
     showLockedMessage(
       error.message || "Secure connection failed. Close the Activity and try again.",
       true
@@ -273,7 +306,7 @@ async function startGame() {
   authStatus.hidden = false;
   setMessage(authStatus, "Loading today's Wordle…");
   try {
-    const response = await apiRequest("/api/game/today");
+    const response = await apiRequest("/api/game/today", {}, "game_load");
     currentGame = response.game;
     lockedPanel.hidden = true;
     gamePanel.hidden = false;
