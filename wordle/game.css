@@ -27,12 +27,11 @@ button { color: inherit; font: inherit; }
 .app-shell { display: flex; width: min(100%, 620px); min-height: 100vh; flex-direction: column; margin: 0 auto; padding: 20px 22px 14px; }
 .topbar, .brand, .activity-tag, .game-heading, .save-note, .app-footer { display: flex; align-items: center; }
 .topbar { min-height: 48px; justify-content: space-between; border-bottom: 1px solid rgb(255 255 255 / 8%); }
-.brand { gap: 10px; color: var(--text); text-decoration: none; }
-.brand:visited { color: var(--text); }
+.topbar a.brand, .topbar a.brand:link, .topbar a.brand:visited, .topbar a.brand:hover, .topbar a.brand:active { gap: 10px; color: var(--text) !important; text-decoration: none !important; }
 .brand-mark { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid var(--accent); color: var(--accent); font: 800 23px/1 var(--display); transform: skew(-7deg); }
 .brand strong, .brand small { display: block; }
-.brand strong { font: 700 17px/1 var(--display); letter-spacing: 1.5px; }
-.brand small { margin-top: 4px; color: var(--muted); font-size: 8px; letter-spacing: 1.6px; }
+.topbar .brand strong { color: var(--text) !important; font: 700 17px/1 var(--display); letter-spacing: 1.5px; text-decoration: none !important; }
+.topbar .brand small { margin-top: 4px; color: var(--muted) !important; font-size: 8px; letter-spacing: 1.6px; text-decoration: none !important; }
 .activity-tag { gap: 7px; color: var(--muted); font-size: 8px; letter-spacing: 1.3px; }
 .activity-tag > span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
