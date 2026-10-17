@@ -30,7 +30,14 @@
         <span>Guess the five-letter word. Tile colours show which letters are correct, misplaced, or not in the target. You get one run per day.</span>
       </div>
       <p class="status" id="auth-status" role="status" aria-live="polite">Connecting to Discord…</p>
-      <button class="play-button" id="play-button" type="button" hidden>PLAY TODAY'S WORDLE <span aria-hidden="true">→</span></button>
+      <button class="play-button" id="play-button" type="button" hidden>
+        <span class="play-button-icon" aria-hidden="true"><span></span></span>
+        <span class="play-button-copy">
+          <span class="play-button-kicker">MISSION READY</span>
+          <strong>PLAY TODAY'S WORDLE</strong>
+        </span>
+        <span class="play-button-arrow" aria-hidden="true">→</span>
+      </button>
     </section>
 
     <section class="game-panel" id="game-panel" hidden aria-labelledby="game-title">
