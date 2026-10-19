@@ -90,12 +90,11 @@ code { color: #f0c27a; font-family: Consolas, monospace; }
 
 .board { display: grid; width: min(100%, 310px); grid-template-columns: repeat(5, 1fr); gap: 5px; margin: 13px auto 2px; }
 .cell { display: grid; aspect-ratio: 1; place-items: center; border: 1px solid #4a4b43; color: var(--text); font: 700 clamp(20px, 6vw, 28px)/1 var(--display); text-transform: uppercase; }
-.cell.filled { border-color: #858577; animation: pop 90ms ease-out; }
+.cell.filled { border-color: #858577; }
 .cell.correct, .cell.present, .cell.absent { border-color: transparent; }
 .cell.correct { background: var(--correct); }
 .cell.present { background: var(--present); }
 .cell.absent { background: var(--absent); }
-@keyframes pop { 50% { transform: scale(1.07); } }
 @keyframes invalid-guess { 25%, 75% { transform: translateX(-5px); } 50%, 100% { transform: translateX(5px); } }
 .board.invalid-guess { animation: invalid-guess 220ms ease-in-out; }
 .game-status { min-height: 19px; margin: 5px 0; text-align: center; }
