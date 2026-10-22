@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#10110f">
   <meta name="description" content="Task Force 9's Discord Wordle Activity.">
   <title>TF9 Wordle Activity</title>
-  <link rel="stylesheet" href="game.css?v=20261017-7">
+  <link rel="stylesheet" href="game.css?v=20261022-1">
   <script src="config.js"></script>
   <script>window.TF9_ACTIVITY_ENTRY = true;</script>
   <script src="game.bundle.js" defer></script>
@@ -76,6 +76,26 @@
       <div class="keyboard" id="keyboard" aria-label="On-screen keyboard"></div>
       <p class="save-note"><span aria-hidden="true">◆</span> ACCOUNT-LOCKED RUN <span>·</span> RESETS AT 00:00 UTC</p>
     </section>
+
+    <div class="finish-overlay" id="finish-overlay" hidden>
+      <section
+        class="finish-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="finish-title"
+        aria-describedby="finish-message"
+      >
+        <p class="eyebrow">DAILY OPERATION COMPLETE</p>
+        <h2 id="finish-title"></h2>
+        <p class="finish-message" id="finish-message"></p>
+        <div class="finish-answer">
+          <span>TODAY'S TARGET</span>
+          <strong id="finish-answer"></strong>
+        </div>
+        <p class="finish-attempts" id="finish-attempts"></p>
+        <button class="finish-button" id="finish-button" type="button">REVIEW BOARD</button>
+      </section>
+    </div>
 
     <footer class="app-footer">
       <span>TASK FORCE 9</span>
