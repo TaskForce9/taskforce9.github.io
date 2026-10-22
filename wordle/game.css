@@ -100,6 +100,19 @@ code { color: #f0c27a; font-family: Consolas, monospace; }
 .game-status { min-height: 19px; margin: 5px 0; text-align: center; }
 .result { min-height: 18px; color: #e2dfd1; font-size: 11px; font-weight: 700; text-align: center; }
 
+.finish-overlay { position: fixed; z-index: 10; inset: 0; display: grid; place-items: center; padding: 20px; background: rgb(0 0 0 / 78%); backdrop-filter: blur(5px); }
+.finish-dialog { width: min(100%, 380px); padding: 29px 25px 24px; border: 1px solid #795047; border-top: 3px solid var(--accent); border-radius: 5px; background: linear-gradient(145deg, #22221d, #151613 70%); box-shadow: 0 22px 70px rgb(0 0 0 / 65%), inset 0 1px rgb(255 255 255 / 5%); text-align: center; }
+.finish-dialog .eyebrow { margin-bottom: 9px; color: #d99a8d; }
+.finish-dialog h2 { margin: 0; color: var(--text); font: 800 clamp(34px, 9vw, 48px)/1 var(--display); letter-spacing: .8px; }
+.finish-message { margin: 12px 0 20px; color: #c5c4b8; font-size: 13px; line-height: 1.6; }
+.finish-answer { display: grid; gap: 4px; padding: 13px; border: 1px solid var(--line); background: rgb(255 255 255 / 3%); }
+.finish-answer span { color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: 1.7px; }
+.finish-answer strong { color: #f0c27a; font: 800 29px/1.1 var(--display); letter-spacing: 5px; }
+.finish-attempts { margin: 13px 0 18px; color: #c5c4b8; font-size: 11px; }
+.finish-button { min-height: 42px; padding: 0 20px; border: 1px solid #a64d40; border-radius: 3px; background: var(--accent); color: #fff; cursor: pointer; font-size: 10px; font-weight: 700; letter-spacing: 1.3px; }
+.finish-button:hover { background: #b94d3e; }
+.finish-button:focus-visible { outline: 2px solid #f0c27a; outline-offset: 3px; }
+
 .keyboard { display: grid; gap: 7px; margin-top: 13px; }
 .keyboard-row { display: flex; justify-content: center; gap: 5px; }
 .key { display: grid; min-width: 0; height: 42px; flex: 1; place-items: center; border: 0; border-radius: 3px; background: #68695f; color: white; cursor: pointer; font-size: 13px; font-weight: 700; text-transform: uppercase; touch-action: manipulation; }
@@ -122,6 +135,7 @@ code { color: #f0c27a; font-family: Consolas, monospace; }
   .locked-panel { padding: 30px 3px; }
   .game-panel { padding-top: 13px; }
   .game-heading h1 { font-size: 40px; }
+  .finish-dialog { padding-inline: 19px; }
   .board { width: min(100%, 290px); gap: 4px; }
   .cell { font-size: 25px; }
   .key { height: 44px; font-size: 12px; }

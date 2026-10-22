@@ -12,6 +12,12 @@ const keyboard = document.getElementById("keyboard");
 const result = document.getElementById("result");
 const dateLabel = document.getElementById("puzzle-date");
 const operatorLabel = document.getElementById("operator-id");
+const finishOverlay = document.getElementById("finish-overlay");
+const finishTitle = document.getElementById("finish-title");
+const finishMessage = document.getElementById("finish-message");
+const finishAnswer = document.getElementById("finish-answer");
+const finishAttempts = document.getElementById("finish-attempts");
+const finishButton = document.getElementById("finish-button");
 const apiBase = window.TF9_ACTIVITY_ENTRY
   ? ""
   : String(config.wordleApiBaseUrl || "").replace(/\/+$/, "");
@@ -190,10 +196,13 @@ function updateSummary() {
   if (currentGame.status === "won") {
     result.textContent = `TARGET SECURED · ${currentGame.guesses.length}/6`;
     setMessage(gameStatus, "Operation complete. Your result is locked for today.");
+    showFinishScreen();
   } else if (currentGame.status === "lost") {
     result.textContent = `TARGET: ${currentGame.answer}`;
     setMessage(gameStatus, "No more attempts. A new target deploys at 00:00 UTC.");
+    showFinishScreen();
   } else {
+    finishOverlay.hidden = true;
     result.textContent = "";
     const remaining = currentGame.attemptsRemaining;
     setMessage(
@@ -201,6 +210,22 @@ function updateSummary() {
       `${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining. Progress saves automatically.`
     );
   }
+}
+
+function showFinishScreen() {
+  if (!currentGame || currentGame.status === "playing") {
+    return;
+  }
+
+  const won = currentGame.status === "won";
+  const attempts = currentGame.guesses.length;
+  finishTitle.textContent = won ? "TARGET SECURED" : "TARGET NOT FOUND";
+  finishMessage.textContent = won
+    ? "Good work, operator. Your result is locked in for today."
+    : "Today's attempts are complete. A new target deploys at 00:00 UTC.";
+  finishAnswer.textContent = currentGame.answer;
+  finishAttempts.textContent = `Completed in ${attempts} of 6 ${attempts === 1 ? "attempt" : "attempts"}.`;
+  finishOverlay.hidden = false;
 }
 
 async function submitDraft() {
@@ -266,6 +291,10 @@ function showLockedMessage(message, isError = false) {
 async function connectActivity() {
   if (window.self === window.top && !window.TF9_ACTIVITY_ENTRY) {
     showLockedMessage("Open this game inside the Task Force 9 Discord server.");
+    return;
+  }
+  if (window.self === window.top && window.TF9_ACTIVITY_ENTRY) {
+    showLockedMessage("You need to be logged in to Discord to play. Open this Activity in Discord.");
     return;
   }
   if (!config.discordApplicationId || (!window.TF9_ACTIVITY_ENTRY && !apiBase)) {
@@ -366,6 +395,16 @@ keyboard.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-key]");
   if (button) {
     handleKey(button.dataset.key);
+  }
+});
+
+finishButton.addEventListener("click", () => {
+  finishOverlay.hidden = true;
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && currentGame && currentGame.status !== "playing") {
+    showFinishScreen();
   }
 });
 
