@@ -26,8 +26,9 @@ button { color: inherit; font: inherit; }
 
 .app-shell { display: flex; width: min(100%, 620px); min-height: 100vh; flex-direction: column; margin: 0 auto; padding: 20px 22px 14px; }
 .website-page .app-shell { width: min(1120px, 100%); padding: 0 24px 14px; }
-.website-nav-header { position: sticky; top: 0; z-index: 10; margin-inline: -24px; padding-inline: 24px; border-bottom: 1px solid rgb(255 255 255 / 7%); background: rgb(16 17 15 / 94%); backdrop-filter: blur(14px); }
+.website-nav-header { position: sticky; top: 0; z-index: 10; margin-inline: -24px; padding-inline: 24px; border-bottom: 1px solid rgb(255 255 255 / 7%); background: rgb(16 17 15 / 92%); backdrop-filter: blur(14px); }
 .website-nav { position: relative; display: flex; min-height: 76px; align-items: center; justify-content: space-between; gap: 20px; }
+.website-nav a { color: inherit; text-decoration: none; }
 .website-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 11px; color: var(--text); text-decoration: none; }
 .website-nav-mark { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--accent); color: #e16a56; font: 800 23px/1 var(--display); transform: skew(-7deg); }
 .website-nav-copy { display: grid; gap: 4px; }
@@ -37,7 +38,7 @@ button { color: inherit; font: inherit; }
 .website-nav .nav-links > a:not(.nav-join) { white-space: nowrap; }
 .website-nav .nav-links > a:not(.nav-join):hover { color: #e16a56; }
 .website-nav .nav-links > a[aria-current="page"] { color: #e16a56; }
-.website-nav .nav-join { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 15px; border: 1px solid #45463c; color: var(--text); white-space: nowrap; }
+.website-nav .nav-join { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 17px; padding: 11px 15px; border: 1px solid #45463c; color: var(--text); white-space: nowrap; }
 .website-nav .nav-join span:last-child { color: #e16a56; }
 .website-nav .menu-toggle { display: none; }
 .topbar, .brand, .activity-tag, .game-heading, .save-note, .app-footer { display: flex; align-items: center; }
