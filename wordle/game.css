@@ -25,6 +25,21 @@ button { color: inherit; font: inherit; }
 [hidden] { display: none !important; }
 
 .app-shell { display: flex; width: min(100%, 620px); min-height: 100vh; flex-direction: column; margin: 0 auto; padding: 20px 22px 14px; }
+.website-page .app-shell { width: min(1120px, 100%); padding: 0 24px 14px; }
+.website-nav-header { position: sticky; top: 0; z-index: 10; margin-inline: -24px; padding-inline: 24px; border-bottom: 1px solid rgb(255 255 255 / 7%); background: rgb(16 17 15 / 94%); backdrop-filter: blur(14px); }
+.website-nav { position: relative; display: flex; min-height: 76px; align-items: center; justify-content: space-between; gap: 20px; }
+.website-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 11px; color: var(--text); text-decoration: none; }
+.website-nav-mark { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--accent); color: #e16a56; font: 800 23px/1 var(--display); transform: skew(-7deg); }
+.website-nav-copy { display: grid; gap: 4px; }
+.website-nav-copy strong { font: 700 17px/1 var(--display); letter-spacing: 1.4px; }
+.website-nav-copy small { color: var(--muted); font-size: 8px; letter-spacing: 1.2px; white-space: nowrap; }
+.website-nav .nav-links { display: flex; align-items: center; gap: clamp(12px, 2.2vw, 30px); color: #c4c4bc; font-size: 12px; }
+.website-nav .nav-links > a:not(.nav-join) { white-space: nowrap; }
+.website-nav .nav-links > a:not(.nav-join):hover { color: #e16a56; }
+.website-nav .nav-links > a[aria-current="page"] { color: #e16a56; }
+.website-nav .nav-join { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 15px; border: 1px solid #45463c; color: var(--text); white-space: nowrap; }
+.website-nav .nav-join span:last-child { color: #e16a56; }
+.website-nav .menu-toggle { display: none; }
 .topbar, .brand, .activity-tag, .game-heading, .save-note, .app-footer { display: flex; align-items: center; }
 .topbar { min-height: 48px; justify-content: space-between; border-bottom: 1px solid rgb(255 255 255 / 8%); }
 .topbar a.brand, .topbar a.brand:link, .topbar a.brand:visited, .topbar a.brand:hover, .topbar a.brand:active { gap: 10px; color: var(--text) !important; text-decoration: none !important; }
@@ -131,6 +146,16 @@ code { color: #f0c27a; font-family: Consolas, monospace; }
 
 @media (max-width: 480px) {
   .app-shell { padding: 14px 14px 12px; }
+  .website-page .app-shell { padding: 0 14px 12px; }
+  .website-nav-header { margin-inline: -14px; padding-inline: 14px; }
+  .website-nav { min-height: 66px; }
+  .website-nav-copy strong { font-size: 15px; }
+  .website-nav .menu-toggle { display: grid; width: 42px; height: 42px; align-content: center; justify-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; cursor: pointer; }
+  .website-nav .menu-toggle span { width: 17px; height: 1px; background: var(--text); }
+  .website-nav .nav-links { position: absolute; top: 65px; right: -14px; left: -14px; display: none; align-items: stretch; gap: 0; padding: 8px 18px 17px; border-bottom: 1px solid var(--line); background: #11120f; }
+  .website-nav .nav-links.is-open { display: flex; flex-direction: column; }
+  .website-nav .nav-links > a:not(.nav-join) { padding: 13px 2px; }
+  .website-nav .nav-join { margin-top: 5px; }
   .activity-tag { font-size: 7px; }
   .locked-panel { padding: 30px 3px; }
   .game-panel { padding-top: 13px; }
@@ -141,6 +166,18 @@ code { color: #f0c27a; font-family: Consolas, monospace; }
   .key { height: 44px; font-size: 12px; }
   .keyboard-row { gap: 4px; }
   .app-footer { font-size: 6px; }
+}
+
+@media (min-width: 481px) and (max-width: 760px) {
+  .website-page .app-shell { padding-inline: 18px; }
+  .website-nav-header { margin-inline: -18px; padding-inline: 18px; }
+  .website-nav { min-height: 66px; }
+  .website-nav .menu-toggle { display: grid; width: 42px; height: 42px; align-content: center; justify-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; cursor: pointer; }
+  .website-nav .menu-toggle span { width: 17px; height: 1px; background: var(--text); }
+  .website-nav .nav-links { position: absolute; top: 65px; right: -18px; left: -18px; display: none; align-items: stretch; gap: 0; padding: 8px 18px 17px; border-bottom: 1px solid var(--line); background: #11120f; }
+  .website-nav .nav-links.is-open { display: flex; flex-direction: column; }
+  .website-nav .nav-links > a:not(.nav-join) { padding: 13px 2px; }
+  .website-nav .nav-join { margin-top: 5px; }
 }
 
 @media (max-height: 690px) and (min-width: 481px) {

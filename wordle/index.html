@@ -6,18 +6,32 @@
   <meta name="theme-color" content="#10110f">
   <meta name="description" content="The daily Task Force 9 tactical Wordle Discord Activity.">
   <title>Daily Wordle — Task Force 9</title>
-  <link rel="stylesheet" href="game.css?v=20261022-1">
+  <link rel="stylesheet" href="game.css?v=20261026-1">
   <script src="config.js"></script>
-  <script src="game.bundle.js?v=20261022-2" defer></script>
+  <script src="../script.js" defer></script>
+  <script src="game.bundle.js?v=20261026-1" defer></script>
 </head>
-<body>
+<body class="website-page">
   <main class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="../" aria-label="Task Force 9 home">
-        <span class="brand-mark" aria-hidden="true">9</span>
-        <span><strong>TASK FORCE 9</strong><small>DAILY OPERATIONS</small></span>
-      </a>
-      <span class="activity-tag"><span></span> DISCORD ACTIVITY</span>
+    <header class="website-nav-header">
+      <nav class="website-nav" aria-label="Main navigation">
+        <a class="website-nav-brand" href="../" aria-label="Task Force 9 home">
+          <span class="website-nav-mark" aria-hidden="true">9</span>
+          <span class="website-nav-copy"><strong>TASK FORCE</strong><small>VETTED MILSIM COMMUNITY</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+          <span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          <a href="../#about">Our unit</a>
+          <a href="../#standards">What we value</a>
+          <a href="../#recruitment">Recruitment</a>
+          <a href="./" aria-current="page">Daily Wordle</a>
+          <a class="nav-join invite-link" href="https://discord.gg/RkpmHVmQx4" target="_blank" rel="noopener noreferrer">
+            <span>Join the Discord</span><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </nav>
     </header>
 
     <section class="locked-panel" id="locked-panel" aria-labelledby="locked-title">
