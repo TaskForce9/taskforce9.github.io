@@ -1,1 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10110f">
+  <meta name="description" content="The daily Task Force 9 tactical Wordle Discord Activity.">
+  <title>Daily Wordle — Task Force 9</title>
+  <link rel="stylesheet" href="game.css?v=20261026-2">
+  <script src="config.js"></script>
+  <script src="../script.js" defer></script>
+  <script src="game.bundle.js?v=20261026-1" defer></script>
+</head>
+<body class="website-page">
+  <main class="app-shell">
+    <header class="website-nav-header">
+      <nav class="website-nav" aria-label="Main navigation">
+        <a class="website-nav-brand" href="../" aria-label="Task Force 9 home">
+          <span class="website-nav-mark" aria-hidden="true">9</span>
+          <span class="website-nav-copy"><strong>TASK FORCE</strong><small>VETTED MILSIM COMMUNITY</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+          <span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          <a href="../#about">Our unit</a>
+          <a href="../#standards">What we value</a>
+          <a href="../#recruitment">Recruitment</a>
+          <a href="./" aria-current="page">Daily Wordle</a>
+          <a class="nav-join invite-link" href="https://discord.gg/RkpmHVmQx4" target="_blank" rel="noopener noreferrer">
+            <span>Join the Discord</span><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </nav>
+    </header>
 
+    <section class="locked-panel" id="locked-panel" aria-labelledby="locked-title">
+      <p class="eyebrow">ONE TARGET · SIX ATTEMPTS · ONE DAILY RUN</p>
+      <h1 id="locked-title">TF9 <span>WORDLE</span></h1>
+      <p class="intro">A tactical five-letter challenge. Your progress is secured to your Discord account and saved across sessions.</p>
+      <p class="status" id="auth-status" role="status" aria-live="polite">Open this game inside the Task Force 9 Discord server.</p>
+      <div class="how-to">
+        <strong>DEPLOY IN DISCORD</strong>
+        <span>Join the server, then run <code>/wordle</code> or start the Activity from the Activities menu.</span>
+      </div>
+      <a class="join-link" href="https://discord.gg/RkpmHVmQx4" target="_blank" rel="noopener noreferrer">JOIN TASK FORCE 9 <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="game-panel" id="game-panel" hidden aria-labelledby="game-title">
+      <div class="game-heading">
+        <div>
+          <p class="eyebrow">DAILY OPERATIONS <span class="divider">/</span> <span id="puzzle-date">UTC</span></p>
+          <h1 id="game-title">FIELD <span>WORD</span></h1>
+        </div>
+        <div class="operator-id" id="operator-id"></div>
+      </div>
+
+      <details class="instructions">
+        <summary>HOW TO PLAY</summary>
+        <p>Find the five-letter TF9-themed target in six guesses. Each guess must be five letters. Tiles show the target's letters and positions. Your run is saved to your Discord account and cannot be restarted.</p>
+        <div class="legend" aria-label="Tile color key">
+          <span class="tile correct" aria-hidden="true"></span><span>Correct position</span>
+          <span class="tile present" aria-hidden="true"></span><span>In the target, different position</span>
+          <span class="tile absent" aria-hidden="true"></span><span>Not in the target</span>
+        </div>
+      </details>
+
+      <div class="board" id="board" role="grid" aria-label="Six guesses of five letters"></div>
+      <p class="status game-status" id="game-status" role="status" aria-live="polite">Establishing secure link…</p>
+      <div class="result" id="result" aria-live="polite"></div>
+      <div class="keyboard" id="keyboard" aria-label="On-screen keyboard"></div>
+      <p class="save-note"><span aria-hidden="true">◆</span> ACCOUNT-LOCKED RUN <span>·</span> RESETS AT 00:00 UTC</p>
+    </section>
+
+    <div class="finish-overlay" id="finish-overlay" hidden>
+      <section
+        class="finish-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="finish-title"
+        aria-describedby="finish-message"
+      >
+        <p class="eyebrow">DAILY OPERATION COMPLETE</p>
+        <h2 id="finish-title"></h2>
+        <p class="finish-message" id="finish-message"></p>
+        <div class="finish-answer">
+          <span>TODAY'S TARGET</span>
+          <strong id="finish-answer"></strong>
+        </div>
+        <p class="finish-attempts" id="finish-attempts"></p>
+        <button class="finish-button" id="finish-button" type="button">REVIEW BOARD</button>
+      </section>
+    </div>
+
+    <footer class="app-footer">
+      <span>TASK FORCE 9</span>
+      <span>DISCIPLINE · COMMUNICATION · TEAMWORK</span>
+    </footer>
+  </main>
+</body>
+</html>
